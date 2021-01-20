@@ -218,7 +218,7 @@ spec.user_target_xcconfig // 可以修改主工程的Build Setting配置。
 
 #### 5.2.2 问题2，MTXX中在添加了对于MTPhotoAsset的扩展A，swift 与 Objective-C都有调用A
 
-![c++ module错误](Images/c++ module错误.png)
+![c++ module错误](Images/c++module错误.png)
 
 解决方案：MTXX-Bridging-Header.h中移除 MTPhotoAsset 扩展A，针对扩展A添加一层包装，使得 MTXX-Bridging-Header.h 不引入MTPhotoLibrary内的Header。
 
@@ -232,7 +232,7 @@ spec.user_target_xcconfig // 可以修改主工程的Build Setting配置。
 
 #### 5.2.4 问题4，merge-module command failed due to signal 6
 
-![signal 6错误](Images/signal 6错误.png)
+![signal 6错误](Images/signal6错误.png)
 
 查看编译Error
 
