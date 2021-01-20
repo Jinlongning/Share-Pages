@@ -212,13 +212,13 @@ spec.user_target_xcconfig // 可以修改主工程的Build Setting配置。
 
 原本的方案是在 MTVideoEdit-umbrella.h 与 MTXX-Bridging-Header.h 中添加 #import <MTPhotoLibrary/MTPhotoLibrary.h>，黑魔法，在MTVideoEditDemo中编译正常，但是在MTXX工程中编译失败，部分swift代码找不到 MTPhotoLibrary 类
 
-![image-20201225174514174](/Users/zj-db0449/Library/Application Support/typora-user-images/image-20201225174514174.png)
+![MTPhotoLibiary编译错误](Images/MTPhotoLibiary编译错误.png)
 
 解决方案：针对 MTPhotoLibrary 开启 Module，整理MTXX工程中 直接/间接将 MTPhotoLibrary 引入在 MTXX-Bridging-Header.h 中的头文件，在头文件中用@class MTPhotoAsset等声明。
 
 #### 5.2.2 问题2，MTXX中在添加了对于MTPhotoAsset的扩展A，swift 与 Objective-C都有调用A
 
-![image-20201225175210178](/Users/zj-db0449/Library/Application Support/typora-user-images/image-20201225175210178.png)
+![c++ module错误](Images/c++ module错误.png)
 
 解决方案：MTXX-Bridging-Header.h中移除 MTPhotoAsset 扩展A，针对扩展A添加一层包装，使得 MTXX-Bridging-Header.h 不引入MTPhotoLibrary内的Header。
 
@@ -226,13 +226,13 @@ spec.user_target_xcconfig // 可以修改主工程的Build Setting配置。
 
 原因分析 MTMediaKit 的 MTMediaBaseDataModel.h 里引入了 YYModel.h，同时 MTMediaBaseDataModel.h 被引入到 MTMediaKit-umbrella.h 文件里，通知底层修改之后编译报错，在 MTXX-Bridging-Header.h 里引入 YYModel.h，问题解决。
 
-![企业微信截图_b63e2127-a58c-49e5-ab51-1bcc8f9147fa](/Users/zj-db0449/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Data/1688852491345174/Cache/Image/2020-12/企业微信截图_b63e2127-a58c-49e5-ab51-1bcc8f9147fa.png)
+![YYModel错误](Images/YYModel错误.png)
 
 结论：PodA 中的 Objective-C 文件被加入到 PodB-umbrella.h 文件里之后可以，可以在工程中和PodB的swift文件中访问。
 
 #### 5.2.4 问题4，merge-module command failed due to signal 6
 
-![企业微信截图_eaba13de-4778-4eae-8bf1-08a1c3b0cc49](/Users/zj-db0449/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Data/1688852491345174/Cache/Image/2020-12/企业微信截图_eaba13de-4778-4eae-8bf1-08a1c3b0cc49.png)
+![signal 6错误](Images/signal 6错误.png)
 
 查看编译Error
 
